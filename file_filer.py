@@ -5,8 +5,9 @@ from pathlib import Path
 # directories to collection of file extensions
 INV_EXTS = {
     "~/Books": [".pdf"],
-    "~/Photos": [".jpg", ".jpeg", ".heic"],
+    "~/Images": [".jpg", ".jpeg", ".heic", ".png", ".gif"],
     "~/Text": [".txt"],
+    "~/Videos": [".mp4", ".mkv"],
 }
 
 # Convert to a dictionary mapping file extension to directory
@@ -18,11 +19,14 @@ EXTS = {
 
 
 def move_file(p: Path, dest: Path): 
+    """ Write a shell command to move the file. """
     print(f'mv "{str(p)}" "{str(dest)}/."')
 
 
-def filer():
-    for p in Path('.').glob('*'):
+def filer(start_dir="."):
+    """ Move all files that match a known extension. """
+    for p in Path(start_dir).glob('*'):
+        # Move only files that have a known file extension
         if p.is_file() and (destination := EXTS.get(p.suffix)):
             move_file(p, destination)
 
